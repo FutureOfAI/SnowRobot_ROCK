@@ -410,6 +410,12 @@ message_runtime_DIR:PATH=/opt/ros/kinetic/share/message_runtime/cmake
 //The directory containing a CMake configuration file for nav_msgs.
 nav_msgs_DIR:PATH=/opt/ros/kinetic/share/nav_msgs/cmake
 
+//Value Computed by CMake
+read_sensor_BINARY_DIR:STATIC=/home/rock/catkin_ws/build/read_sensor
+
+//Value Computed by CMake
+read_sensor_SOURCE_DIR:STATIC=/home/rock/catkin_ws/src/read_sensor
+
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/kinetic/share/rosconsole/cmake
 
@@ -541,6 +547,12 @@ serial_LIB_DEPENDS:STATIC=general;rt;general;pthread;
 
 //Value Computed by CMake
 serial_SOURCE_DIR:STATIC=/home/rock/catkin_ws/src/serial
+
+//Value Computed by CMake
+snow_rtk_BINARY_DIR:STATIC=/home/rock/catkin_ws/build/snow_rtk
+
+//Value Computed by CMake
+snow_rtk_SOURCE_DIR:STATIC=/home/rock/catkin_ws/src/snow_rtk
 
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/kinetic/share/std_msgs/cmake
@@ -702,7 +714,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=20
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=22
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

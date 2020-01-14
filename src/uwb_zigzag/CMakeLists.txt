@@ -54,6 +54,10 @@ add_executable(imu_reader  src/imu_reader.cpp)
 add_dependencies(imu_reader ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(imu_reader  ${catkin_LIBRARIES})
 
+add_executable(mag_reader  src/mag_reader.cpp) 
+add_dependencies(mag_reader ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(mag_reader  ${catkin_LIBRARIES})
+
 add_executable(plan_uwb src/plan_uwb.cpp src/calibinit.cpp src/calib.cpp src/contour.cpp src/astar.cpp src/blockallocator.cpp src/path.cpp)
 add_dependencies(plan_uwb ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(plan_uwb ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
@@ -62,9 +66,9 @@ add_executable(RosTopic_test src/RosTopic_test.cpp)
 add_dependencies(RosTopic_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(RosTopic_test  ${catkin_LIBRARIES})
 
-#add_executable(imuRawData src/serial_imu.cpp) 
-#add_dependencies(imuRawData ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(imuRawData  ${catkin_LIBRARIES})
+add_executable(uwb_usb_reader src/uwb_usb_reader.cpp) 
+add_dependencies(uwb_usb_reader ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(uwb_usb_reader  ${catkin_LIBRARIES})
 
 #add_executable(uwbRawData src/serial_uwb.cpp) 
 #add_dependencies(uwbRawData ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

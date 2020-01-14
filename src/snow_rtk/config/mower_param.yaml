@@ -1,0 +1,28 @@
+rob_theta0: 1.5708 # in rad
+
+Kp_angle_w: 0.010
+Ki_angle_w: 0.005 #  use for control angular velocity in zeroTurning
+Kd_angle_w: 0.005
+
+w_threshold: 0.6  # rad/s
+turnDone_threshold: 25 # degree
+
+Kp_line_w: 0.5 # 0.003 # 0.02
+Ki_line_w: 0.01 # 0.001  # 0.001   use for control angular velocity
+Kd_line_w: 0.03 # 0.0005
+
+Kp_line_v: 0.8 # 0.1
+Ki_line_v: 0.1 # 0.002   use for control linear velocity
+Kd_line_v: 0.2
+
+Kx_curve: 1 #
+Ky_curve: 1 #
+Kz_curve: 1 #
+
+v_threshold: 0.35  # m/s
+moveDone_threshold: 0.05  # m
+
+previewLength: 0.5 # m 
+minTurnRadius: 0.4 # m
+
+pathType: 1 # 0 is T, 1 is V, 2 is TV, 3 is VT

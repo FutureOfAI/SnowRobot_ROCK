@@ -1,4 +1,0 @@
-[2019-09-04 10:42:58.659] [robot_status] [info] 
-
-
----------------- The initial sensor is starting-----------------------

@@ -1,0 +1,16 @@
+<launch>
+
+  <!--rosserial-->
+  <node pkg="rosserial_python" type="serial_node.py" name="stm32_core" output="screen" respawn="true">
+  <param name="port" value="/dev/stm32"/>
+  <param name="baud" value="115200"/>
+  </node>
+
+    <!-- GNSS publisher node -->
+  <node pkg="read_sensor" type="read_rtk" name="read_rtk" output="screen"/>
+
+    <!--mapping-->
+  <node pkg="snow_rtk" type="map_snow" name="map_snow" output="screen" >
+  </node>
+
+</launch>

@@ -1,0 +1,36 @@
+BaseStationA_x: 0 # m 6.10  # 
+BaseStationA_y: 0  # 0 # m
+
+BaseStationB_x: 28.5 # 10.52  #  0  # 
+BaseStationB_y: 10.03 #-0.1398  # m -0.40 # 
+
+BaseStationC_x: 0 # m 0.10 #  
+BaseStationC_y: 20.06 # 10.66  # m 4.0 # 
+
+BaseStationD_x: 10.47 # m 0.10 #  
+BaseStationD_y: 10.85 # 10.66  # m 4.0 # 
+
+High_BS1: 1.94 #  # m 1.0 #  0.48 # 1.43 #
+High_BS2: 1.78 #  # m 1.0 # 0.48 # 1.55 #
+High_BS3: 1.98 #  # m 1.0 # 0.48 # 1.42 #
+High_BS4: 1.96
+
+BaseStationAB: 10.54 # 21.48 # 21.48 # 30.13 # 20.13 # 10.54 # 21.5 #  # m 6.10 #
+BaseStationBC: 15.09 # 36.30 # 29.77 # 31.38 # 23.56 # 12.45 #  23.85 #  # m 3.93 #
+BaseStationCA: 10.66 # 36.85 # 20.06 # 17.207 # 17.207 # 12.40 #  10.4 #  # m 7.32 #
+BaseStationAD: 15.10 
+BaseStationBD: 10.875
+BaseStationCD: 10.57 
+
+BaseStationType: 2 # description : 0 is no BS information, 1 is use position, 2 is used length
+
+High_Tag: 0.48 # m
+DeltaHigh: 1.30 # 0.94 #0.43 # m
+
+PrecisionThresholdUWB: 2.50 # m
+enableVelUWB: 0.01 # m/s 
+biasThreshold: 2.5 # m
+
+biasFilterIndex: 0.01 # 
+alphaParametre: 0.01 # 
+yawOffsetPeriod: 100 # s

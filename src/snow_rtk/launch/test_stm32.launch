@@ -1,0 +1,19 @@
+﻿<launch>
+
+  <!--rosserial-->
+  <node pkg="rosserial_python" type="serial_node.py" name="stm32_core" output="screen" respawn="true">
+    <param name="port" value="/dev/stm32"/>
+    <param name="baud" value="115200"/>
+  </node>
+
+  <!-- pose publisher node 
+  <node pkg="gps_zigzag" type="gps_reader" name="gps_reader" output="screen"/>stm32
+  -->
+
+  <!--motion_control
+  <node pkg="zigzag_mower" type="motion_control1" name="motion_control1" output="screen" >
+    <rosparam file="$(find zigzag_mower)/config/mower_param.yaml"  command="load"/>
+  </node>
+  -->
+
+</launch>

@@ -1,0 +1,26 @@
+﻿<launch>
+
+  <!--rosserial-->
+  <node pkg="rosserial_python" type="serial_node.py" name="stm32_core" output="screen" respawn="true">
+    <param name="port" value="/dev/stm32"/>
+    <param name="baud" value="115200"/>
+  </node>
+
+  <!-- GNSS publisher node -->
+  <node pkg="read_sensor" type="read_rtk" name="read_rtk" output="screen"/>
+
+  <!-- epson IMU publisher 
+  <node pkg="imu_serial" type="test_program" name="test_program" output="screen"/> 
+  -->
+  
+  <!-- sam IMU publisher -->
+  <node pkg="read_sensor" type="read_imu" name="read_imu" output="screen"/> 
+
+  <!-- mag publisher -->
+  <node pkg="read_sensor" type="read_mag" name="read_mag" output="screen"/>
+
+  <!-- uwb publisher -->
+  <node pkg="read_sensor" type="read_uwb" name="read_uwb" output="screen"/>
+  
+
+</launch>

@@ -1,0 +1,26 @@
+﻿#PID control param
+kp: 0.5
+ki: 0.01
+kd: 0.0
+
+# linear and angular velocity
+W_threshold: 0.8
+V_threshold: 0.4
+
+#sonar testing distance
+sonar_dist: 0.6
+
+#slow starting rate
+move_delay: 40
+
+#the runid is to identify the run instance
+runid: 0
+
+bumpBackDistance: 0.15
+
+initialAngle: 0 # initial angle
+
+backAllowAngle: 30
+
+homeDistance: 0.5
+goHomeParametre: 1 # 0: not go home ; otherwise go home

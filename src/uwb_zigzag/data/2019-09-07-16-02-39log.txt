@@ -1,4 +1,0 @@
-[2019-09-07 16:02:39.401] [robot_status] [info] 
-
-
----------------- The zigzag mower is starting-----------------------

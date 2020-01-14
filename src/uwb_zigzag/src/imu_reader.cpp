@@ -134,23 +134,23 @@ void  buf_write(buf_type * _os,uint8_t *p)
 		_os->OSQIn=_os->Start; 
  }
 
-/*????D��?��o��:  ����?��o��*/
-bool CRC_Check(uint8_t *p)    //D��?��
+
+bool CRC_Check(uint8_t *p)
 {
 	int temp = 0;
-	for(int i = 3; i <= 6; i++)
+	for(int i = 3; i <= 26; i++)
 	{
 		temp += p[i];
 	}
 
-	temp = temp % (256*256);
-	int rcc = (p[27] + p[28]*256) % (256*256);
+	temp = temp ;
+	int rcc = (p[27] + p[28]*256) ;
 
-	// ROS_INFO("temp = %d, rcc= %d",temp,rcc);
+	// if( (p[29] == 0x0D) && (p[30] == 0x0A) ) % (256*256)  % (256*256)
 
-	// if(rcc == temp)
-	if( (p[29] == 0x0D) && (p[30] == 0x0A) )
+	if(rcc == temp)
 	{
+		// ROS_INFO("temp = %d, rcc= %d",temp,rcc);
 		return true;
 	}
 	else

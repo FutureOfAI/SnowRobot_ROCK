@@ -1,7 +1,7 @@
 <launch>
 
   <!--uwbReader-->
-  <node pkg="uwb_zigzag" type="uwb_reader" name="uwb_reader" output="screen"/>
+  <node pkg="uwb_zigzag" type="uwb_usb_reader" name="uwb_usb_reader" output="screen"/>
 
   <!--imuReader-->
   <node pkg="uwb_zigzag" type="imu_reader" name="imu_reader" output="screen"/> 

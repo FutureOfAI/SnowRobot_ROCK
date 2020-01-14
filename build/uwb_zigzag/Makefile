@@ -56,48 +56,17 @@ CMAKE_BINARY_DIR = /home/rock/catkin_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: install/local
-
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: install/strip
-
-.PHONY : install/strip/fast
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -121,17 +90,48 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: install/strip
+
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: install/local
+
+.PHONY : install/local/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -166,171 +166,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_py: uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/rule
-
-.PHONY : actionlib_generate_messages_py
-
-# fast build rule for target.
-actionlib_generate_messages_py/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/build.make uwb_zigzag/CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_nodejs: uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-.PHONY : actionlib_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_generate_messages_nodejs/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make uwb_zigzag/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
-.PHONY : actionlib_generate_messages_nodejs/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_py: uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/rule
-
-.PHONY : tf_generate_messages_py
-
-# fast build rule for target.
-tf_generate_messages_py/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/build.make uwb_zigzag/CMakeFiles/tf_generate_messages_py.dir/build
-.PHONY : tf_generate_messages_py/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
-
-# Convenience name for target.
-initialization_uwb: uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
-
-.PHONY : initialization_uwb
-
-# fast build rule for target.
-initialization_uwb/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/initialization_uwb.dir/build.make uwb_zigzag/CMakeFiles/initialization_uwb.dir/build
-.PHONY : initialization_uwb/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_eus: uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-.PHONY : actionlib_generate_messages_eus
-
-# fast build rule for target.
-actionlib_generate_messages_eus/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/build.make uwb_zigzag/CMakeFiles/actionlib_generate_messages_eus.dir/build
-.PHONY : actionlib_generate_messages_eus/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_cpp: uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/rule
-
-.PHONY : tf_generate_messages_cpp
-
-# fast build rule for target.
-tf_generate_messages_cpp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/build.make uwb_zigzag/CMakeFiles/tf_generate_messages_cpp.dir/build
-.PHONY : tf_generate_messages_cpp/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_cpp: uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-
-.PHONY : actionlib_generate_messages_cpp
-
-# fast build rule for target.
-actionlib_generate_messages_cpp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make uwb_zigzag/CMakeFiles/actionlib_generate_messages_cpp.dir/build
-.PHONY : actionlib_generate_messages_cpp/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_eus: uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/rule
-
-.PHONY : tf_generate_messages_eus
-
-# fast build rule for target.
-tf_generate_messages_eus/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/build.make uwb_zigzag/CMakeFiles/tf_generate_messages_eus.dir/build
-.PHONY : tf_generate_messages_eus/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_nodejs: uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-
-.PHONY : tf_generate_messages_nodejs
-
-# fast build rule for target.
-tf_generate_messages_nodejs/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/build.make uwb_zigzag/CMakeFiles/tf_generate_messages_nodejs.dir/build
-.PHONY : tf_generate_messages_nodejs/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/motion_uwb.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
-
-# Convenience name for target.
-motion_uwb: uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
-
-.PHONY : motion_uwb
-
-# fast build rule for target.
-motion_uwb/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/motion_uwb.dir/build.make uwb_zigzag/CMakeFiles/motion_uwb.dir/build
-.PHONY : motion_uwb/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_lisp: uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_lisp
-
-# fast build rule for target.
-tf2_msgs_generate_messages_lisp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build.make uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build
-.PHONY : tf2_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
 uwb_zigzag/CMakeFiles/map_uwb.dir/rule:
 	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/map_uwb.dir/rule
 .PHONY : uwb_zigzag/CMakeFiles/map_uwb.dir/rule
@@ -344,111 +179,6 @@ map_uwb: uwb_zigzag/CMakeFiles/map_uwb.dir/rule
 map_uwb/fast:
 	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/map_uwb.dir/build.make uwb_zigzag/CMakeFiles/map_uwb.dir/build
 .PHONY : map_uwb/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
-
-# Convenience name for target.
-RosTopic_test: uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
-
-.PHONY : RosTopic_test
-
-# fast build rule for target.
-RosTopic_test/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/RosTopic_test.dir/build.make uwb_zigzag/CMakeFiles/RosTopic_test.dir/build
-.PHONY : RosTopic_test/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_lisp: uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/rule
-
-.PHONY : tf_generate_messages_lisp
-
-# fast build rule for target.
-tf_generate_messages_lisp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/build.make uwb_zigzag/CMakeFiles/tf_generate_messages_lisp.dir/build
-.PHONY : tf_generate_messages_lisp/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_nodejs: uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-tf2_msgs_generate_messages_nodejs/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build.make uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build
-.PHONY : tf2_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_eus: uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_eus
-
-# fast build rule for target.
-tf2_msgs_generate_messages_eus/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
-.PHONY : tf2_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_py: uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_py
-
-# fast build rule for target.
-tf2_msgs_generate_messages_py/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_py.dir/build
-.PHONY : tf2_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/location_uwb.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/location_uwb.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/location_uwb.dir/rule
-
-# Convenience name for target.
-location_uwb: uwb_zigzag/CMakeFiles/location_uwb.dir/rule
-
-.PHONY : location_uwb
-
-# fast build rule for target.
-location_uwb/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/location_uwb.dir/build.make uwb_zigzag/CMakeFiles/location_uwb.dir/build
-.PHONY : location_uwb/fast
-
-# Convenience name for target.
-uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_cpp: uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_cpp
-
-# fast build rule for target.
-tf2_msgs_generate_messages_cpp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make uwb_zigzag/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
-.PHONY : tf2_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 uwb_zigzag/CMakeFiles/uwb_reader.dir/rule:
@@ -466,6 +196,81 @@ uwb_reader/fast:
 .PHONY : uwb_reader/fast
 
 # Convenience name for target.
+uwb_zigzag/CMakeFiles/location_uwb.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/location_uwb.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/location_uwb.dir/rule
+
+# Convenience name for target.
+location_uwb: uwb_zigzag/CMakeFiles/location_uwb.dir/rule
+
+.PHONY : location_uwb
+
+# fast build rule for target.
+location_uwb/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/location_uwb.dir/build.make uwb_zigzag/CMakeFiles/location_uwb.dir/build
+.PHONY : location_uwb/fast
+
+# Convenience name for target.
+uwb_zigzag/CMakeFiles/motion_uwb.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
+
+# Convenience name for target.
+motion_uwb: uwb_zigzag/CMakeFiles/motion_uwb.dir/rule
+
+.PHONY : motion_uwb
+
+# fast build rule for target.
+motion_uwb/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/motion_uwb.dir/build.make uwb_zigzag/CMakeFiles/motion_uwb.dir/build
+.PHONY : motion_uwb/fast
+
+# Convenience name for target.
+uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/rule
+
+# Convenience name for target.
+uwb_usb_reader: uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/rule
+
+.PHONY : uwb_usb_reader
+
+# fast build rule for target.
+uwb_usb_reader/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/build.make uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/build
+.PHONY : uwb_usb_reader/fast
+
+# Convenience name for target.
+uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
+
+# Convenience name for target.
+initialization_uwb: uwb_zigzag/CMakeFiles/initialization_uwb.dir/rule
+
+.PHONY : initialization_uwb
+
+# fast build rule for target.
+initialization_uwb/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/initialization_uwb.dir/build.make uwb_zigzag/CMakeFiles/initialization_uwb.dir/build
+.PHONY : initialization_uwb/fast
+
+# Convenience name for target.
+uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
+
+# Convenience name for target.
+RosTopic_test: uwb_zigzag/CMakeFiles/RosTopic_test.dir/rule
+
+.PHONY : RosTopic_test
+
+# fast build rule for target.
+RosTopic_test/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/RosTopic_test.dir/build.make uwb_zigzag/CMakeFiles/RosTopic_test.dir/build
+.PHONY : RosTopic_test/fast
+
+# Convenience name for target.
 uwb_zigzag/CMakeFiles/imu_reader.dir/rule:
 	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/imu_reader.dir/rule
 .PHONY : uwb_zigzag/CMakeFiles/imu_reader.dir/rule
@@ -481,19 +286,19 @@ imu_reader/fast:
 .PHONY : imu_reader/fast
 
 # Convenience name for target.
-uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
-.PHONY : uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+uwb_zigzag/CMakeFiles/mag_reader.dir/rule:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uwb_zigzag/CMakeFiles/mag_reader.dir/rule
+.PHONY : uwb_zigzag/CMakeFiles/mag_reader.dir/rule
 
 # Convenience name for target.
-actionlib_generate_messages_lisp: uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+mag_reader: uwb_zigzag/CMakeFiles/mag_reader.dir/rule
 
-.PHONY : actionlib_generate_messages_lisp
+.PHONY : mag_reader
 
 # fast build rule for target.
-actionlib_generate_messages_lisp/fast:
-	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make uwb_zigzag/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-.PHONY : actionlib_generate_messages_lisp/fast
+mag_reader/fast:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/mag_reader.dir/build.make uwb_zigzag/CMakeFiles/mag_reader.dir/build
+.PHONY : mag_reader/fast
 
 # Convenience name for target.
 uwb_zigzag/CMakeFiles/plan_uwb.dir/rule:
@@ -753,6 +558,33 @@ src/location_uwb.cpp.s:
 	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/location_uwb.dir/build.make uwb_zigzag/CMakeFiles/location_uwb.dir/src/location_uwb.cpp.s
 .PHONY : src/location_uwb.cpp.s
 
+src/mag_reader.o: src/mag_reader.cpp.o
+
+.PHONY : src/mag_reader.o
+
+# target to build an object file
+src/mag_reader.cpp.o:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/mag_reader.dir/build.make uwb_zigzag/CMakeFiles/mag_reader.dir/src/mag_reader.cpp.o
+.PHONY : src/mag_reader.cpp.o
+
+src/mag_reader.i: src/mag_reader.cpp.i
+
+.PHONY : src/mag_reader.i
+
+# target to preprocess a source file
+src/mag_reader.cpp.i:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/mag_reader.dir/build.make uwb_zigzag/CMakeFiles/mag_reader.dir/src/mag_reader.cpp.i
+.PHONY : src/mag_reader.cpp.i
+
+src/mag_reader.s: src/mag_reader.cpp.s
+
+.PHONY : src/mag_reader.s
+
+# target to generate assembly for a file
+src/mag_reader.cpp.s:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/mag_reader.dir/build.make uwb_zigzag/CMakeFiles/mag_reader.dir/src/mag_reader.cpp.s
+.PHONY : src/mag_reader.cpp.s
+
 src/map_uwb.o: src/map_uwb.cpp.o
 
 .PHONY : src/map_uwb.o
@@ -888,41 +720,55 @@ src/uwb_reader.cpp.s:
 	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/uwb_reader.dir/build.make uwb_zigzag/CMakeFiles/uwb_reader.dir/src/uwb_reader.cpp.s
 .PHONY : src/uwb_reader.cpp.s
 
+src/uwb_usb_reader.o: src/uwb_usb_reader.cpp.o
+
+.PHONY : src/uwb_usb_reader.o
+
+# target to build an object file
+src/uwb_usb_reader.cpp.o:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/build.make uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/src/uwb_usb_reader.cpp.o
+.PHONY : src/uwb_usb_reader.cpp.o
+
+src/uwb_usb_reader.i: src/uwb_usb_reader.cpp.i
+
+.PHONY : src/uwb_usb_reader.i
+
+# target to preprocess a source file
+src/uwb_usb_reader.cpp.i:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/build.make uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/src/uwb_usb_reader.cpp.i
+.PHONY : src/uwb_usb_reader.cpp.i
+
+src/uwb_usb_reader.s: src/uwb_usb_reader.cpp.s
+
+.PHONY : src/uwb_usb_reader.s
+
+# target to generate assembly for a file
+src/uwb_usb_reader.cpp.s:
+	cd /home/rock/catkin_ws/build && $(MAKE) -f uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/build.make uwb_zigzag/CMakeFiles/uwb_usb_reader.dir/src/uwb_usb_reader.cpp.s
+.PHONY : src/uwb_usb_reader.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... list_install_components"
-	@echo "... test"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... actionlib_generate_messages_py"
-	@echo "... rebuild_cache"
-	@echo "... actionlib_generate_messages_nodejs"
-	@echo "... tf_generate_messages_py"
-	@echo "... initialization_uwb"
-	@echo "... actionlib_generate_messages_eus"
-	@echo "... tf_generate_messages_cpp"
-	@echo "... actionlib_generate_messages_cpp"
-	@echo "... tf_generate_messages_eus"
-	@echo "... tf_generate_messages_nodejs"
-	@echo "... motion_uwb"
-	@echo "... tf2_msgs_generate_messages_lisp"
-	@echo "... map_uwb"
-	@echo "... edit_cache"
-	@echo "... RosTopic_test"
-	@echo "... tf_generate_messages_lisp"
-	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... install"
-	@echo "... tf2_msgs_generate_messages_eus"
-	@echo "... tf2_msgs_generate_messages_py"
-	@echo "... location_uwb"
-	@echo "... tf2_msgs_generate_messages_cpp"
+	@echo "... rebuild_cache"
+	@echo "... edit_cache"
+	@echo "... list_install_components"
+	@echo "... install/strip"
+	@echo "... map_uwb"
+	@echo "... install/local"
 	@echo "... uwb_reader"
+	@echo "... location_uwb"
+	@echo "... motion_uwb"
+	@echo "... uwb_usb_reader"
+	@echo "... initialization_uwb"
+	@echo "... test"
+	@echo "... RosTopic_test"
 	@echo "... imu_reader"
-	@echo "... actionlib_generate_messages_lisp"
+	@echo "... mag_reader"
 	@echo "... plan_uwb"
 	@echo "... src/RosTopic_test.o"
 	@echo "... src/RosTopic_test.i"
@@ -951,6 +797,9 @@ help:
 	@echo "... src/location_uwb.o"
 	@echo "... src/location_uwb.i"
 	@echo "... src/location_uwb.s"
+	@echo "... src/mag_reader.o"
+	@echo "... src/mag_reader.i"
+	@echo "... src/mag_reader.s"
 	@echo "... src/map_uwb.o"
 	@echo "... src/map_uwb.i"
 	@echo "... src/map_uwb.s"
@@ -966,6 +815,9 @@ help:
 	@echo "... src/uwb_reader.o"
 	@echo "... src/uwb_reader.i"
 	@echo "... src/uwb_reader.s"
+	@echo "... src/uwb_usb_reader.o"
+	@echo "... src/uwb_usb_reader.i"
+	@echo "... src/uwb_usb_reader.s"
 .PHONY : help
 
 

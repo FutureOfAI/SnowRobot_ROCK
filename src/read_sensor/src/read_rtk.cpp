@@ -47,8 +47,8 @@ std::string getDate()
     return tmp;
 }
 
-// std::string point_path = "/home/raspberry002/catkin_ws/src/rtk_zigzag/data/";
-std::string point_path = "/home/yat/catkin_ws/src/rtk_zigzag/data/";
+std::string point_path = "/home/rock/catkin_ws/src/read_sensor/data/";
+// std::string point_path = "/home/yat/catkin_ws/src/rtk_zigzag/data/";
 std::string file_gnss = point_path + getDate() + "gnssdata.txt";
 std::ofstream fout_point(file_gnss.c_str());
 

@@ -57,7 +57,7 @@ typedef message_filters::sync_policies::ApproximateTime<geometry_msgs::PoseStamp
 std::string getDate();
 
 //point file
-std::string point_path = "/home/rock/catkin_ws/src/read_sensor/data/";
+std::string point_path = "/home/rasp008/mower_ws/src/read_sensor/data/";
 // std::string point_path = "/home/yat/catkin_ws/src/read_sensor/data/";
 std::string file_status = point_path + getDate() + "sensor.txt";
 std::ofstream fout_point(file_status.c_str());
@@ -539,7 +539,7 @@ bool testMotion()
     targetStates.linear.x = commandVelocity.x; // velocity control
     targetStates.angular.z = commandVelocity.y;    // angle control
 
-    vel_pub.publish(targetStates);
+    // vel_pub.publish(targetStates);
 
     return (motionStep == 3)?true:false;
 }

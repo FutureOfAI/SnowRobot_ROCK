@@ -21,7 +21,7 @@ typedef struct Data
 }RawData;
 
 // global variable define
-float RawAcc[3], RawGro[3], RawMag[3], MagYaw; Euler[3], Quat[4], Tempra, HeaderUWB[3], DistUWB[4];
+float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, HeaderUWB[3], DistUWB[4];
 RawData DataBuffer[18000]; //save 30min data when 10hz sample rate
 uint16_t BufCnt = 0; // data buffer counter
 

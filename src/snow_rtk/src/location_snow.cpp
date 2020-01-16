@@ -103,11 +103,6 @@ void attitudeFilterSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &s
     PHI(0,1) = - dt;
     PHI(1,1) = 1;
 
-    // double currentYaw = configMessage.euler.z;
-    // static double yaw_prev = currentYaw; 
-    // double deltaYaw = deltaAngle(currentYaw,yaw_prev);  // delta yaw measured by imu
-    // yaw_prev = currentYaw; 
-
     // update priori estimate yaw states
     solutionMessage.robotEuler.x = configMessage.euler.x;
     solutionMessage.robotEuler.y = configMessage.euler.y;
@@ -261,22 +256,8 @@ void positionFilterSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &s
     if(configMessage.updateGNSS)
     {
         P_p = PHI * P_p * PHI.transpose() + Q;
-        // for(int i = 0;i<4;i++)
-        // {
-        //     for(int j = 0;j<4;j++)
-        //     {
-        //         ROS_INFO("kalman filter P_p(%d,%d) = %f",i,j,P_p(i,j));
-        //     }
-        // }
 
         Eigen::Matrix<double,4,4> S = H*P_p*H.transpose() + R;
-        // for(int i = 0;i<4;i++)
-        // {
-        //     for(int j = 0;j<4;j++)
-        //     {
-        //         ROS_INFO("kalman filter S(%d,%d) = %f",i,j,S(i,j));
-        //     }
-        // }
 
         // update kalman gain
         K = P_p*H.transpose()*(H*P_p*H.transpose() + R).inverse();
@@ -287,8 +268,8 @@ void positionFilterSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &s
     Y.setZero(4,1);
     Y(0,0) = configMessage.gnssENU.x - solutionData.robotEKF.x;
     Y(1,0) = configMessage.gnssENU.y - solutionData.robotEKF.y;
-    Y(2,0) = solutionData.robotVel.x; // sqrtValue(configMessage.gnssVel) * cos(solutionMessage.robotEuler.z + PI/2) - 
-    Y(3,0) = solutionData.robotVel.y; // sqrtValue(configMessage.gnssVel) * sin(solutionMessage.robotEuler.z + PI/2) - 
+    Y(2,0) = sqrtValue(configMessage.gnssVel) * cos(solutionMessage.robotEuler.z + PI/2) - solutionData.robotVel.x; // 
+    Y(3,0) = sqrtValue(configMessage.gnssVel) * sin(solutionMessage.robotEuler.z + PI/2) - solutionData.robotVel.y; // 
 
     // update posteriori evaluation states
     Eigen::Matrix<double,4,1> X_f = K * Y;
@@ -305,7 +286,6 @@ void positionFilterSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &s
 
 void deadReckoningSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &solutionMessage)
 {
-    // double currentYaw = configMessage.euler.z;
     double currentYaw = solutionMessage.robotEuler.z;
     double currentMileage = 0.5*(configMessage.odomMil.x + configMessage.odomMil.y);  // current mileage measured by odom
 
@@ -347,7 +327,7 @@ void deadReckoningSolution(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER &so
 void updateTrajectory(CONFIG_PARAMETER configMessage,SOLUTION_PARAMETER solutionMessage)
 {
     int n = motionData.num;
-    double dt = configMessage.dtGNSS;//;configMessage.dtOdom; configData.dtRTK
+    double dt = configMessage.dtGNSS;
     if(n < 10)
     {
         motionData.point[n] = configMessage.gnssENU;

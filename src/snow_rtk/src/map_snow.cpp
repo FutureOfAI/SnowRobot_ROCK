@@ -114,14 +114,14 @@ void positionCallback(const geometry_msgs::PoseStampedConstPtr& msg_position)
     {
         if(sensorData.rtkType) sensorData.num ++;
 
-        //log the map
+        //record map
         fout_map.setf(std::ios_base::showpoint);
         fout_map.precision(15);
         fout_map << sensorData.rtkENU.x << "   " << sensorData.rtkENU.y << "   " <<  sensorData.rtkENU.z << "   ";
         fout_map << sensorData.rtkBLH.x << "   " << sensorData.rtkBLH.y << "   " <<  sensorData.rtkBLH.z << "   ";
         fout_map << sensorData.rtkType  << "   " << sensorData.num << std::endl;
 
-                //log the map
+        // save the map
         fout_save.setf(std::ios_base::showpoint);
         fout_save.precision(15);
         fout_save << sensorData.rtkENU.x << "   " << sensorData.rtkENU.y << "   " <<  sensorData.rtkENU.z << "   ";
@@ -188,10 +188,6 @@ int main(int argc, char **argv)
         {
             if(sensorData.stopRecord)
             {
-                // std_msgs::Bool finishMap;
-                // finishMap.data = true;
-                // map_sub.publish(finishMap);
-
                 fout_map.close();
                 fout_save.close();
                 ROS_INFO("snow map : fencing done.");

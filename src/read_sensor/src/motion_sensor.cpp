@@ -149,10 +149,9 @@ void dataRecord()
     fout_point << sensorData.rtkYaw << " " <<  sensorData.rtkVel << " " << sensorData.magYaw << " ";
     fout_point << sensorData.magXYZ.x << " " <<  sensorData.magXYZ.y << " " << sensorData.magXYZ.z << " " ;
     fout_point << sensorData.heading.x << " " <<  sensorData.heading.y << " " << sensorData.heading.z << " " ;
-    fout_point << gotPointRTK << dt1 << " " <<  dt2 << " " <<  dt3 << " " << dt4 << " "  << dt5 << " "<< std::endl;
+    fout_point << gotPointRTK << " " << dt1 << " " <<  dt2 << " " <<  dt3 << " " << dt4 << " "  << dt5 << " "<< std::endl;
 
     lastTime = currentTime;
-    
 }
 
 /*******************************************************************/

@@ -304,7 +304,7 @@ int getAlongSide(float targetAngle)
     }
 }
 
-bool findOriginPoint(YAT_POINT originXY)
+bool findOriginPoint()
 {
     bool findResult = false;
 
@@ -328,7 +328,7 @@ bool findOriginPoint(YAT_POINT originXY)
         if(detectPointXY(parametre,pointXY))
         {
             int currentData = gridMap.data[i * parametre.rangeX + pointXY.x];
-            if((currentData <= ID_REMAIN)&&(lastData == ID_EDGE))
+            if(currentData <= ID_REMAIN)
             {
                 originXY = pointXY;
                 ROS_INFO("find the origin XY: x = %d, y = %d.",originXY.x,originXY.y);
@@ -943,8 +943,6 @@ bool getRowPoint(YAT_POINT &nextXY,int alongSide,Map plannerMap)
             break;
     }
 
-
-
     return getNextPoint; // if did not find the next point, return the edge point in the grid map 
 }
 
@@ -1207,20 +1205,6 @@ void missionStop()
     vel_pub.publish(msg_vel);
 }
 
-void bumpCallback(const std_msgs::UInt8 isbump)
-{
-    if((isbump.data % 4) > 0)
-    {
-        bumpType[0] = 1;
-    }
-    else
-    {
-        bumpType[0] = 0;
-    }
-
-    getBumpTopic = true;
-}
-
 void ekfPoseCallback(const geometry_msgs::PoseStampedConstPtr& msg_ekf)
 {
     updatePoseTime = ros::Time::now();
@@ -1242,6 +1226,7 @@ void gridMapCallback(nav_msgs::OccupancyGrid msg_map)
     updateMapTime = ros::Time::now();
 
     gridMap = msg_map;
+    
     updateMapFlag = true;
     // ROS_INFO("get the grid map");
     spdlog::get("robot_state")->info("update the grid map from topic named grid_map.");
@@ -1277,7 +1262,6 @@ int main(int argc, char **argv)
     // ros::Subscriber stop_sub = nh.subscribe("mission_finish", 1, missionFinishCallback);
     ros::Subscriber pose_sub = nh.subscribe("ekf_pose", 1, ekfPoseCallback);
     ros::Subscriber map_sub = nh.subscribe("grid_map", 1, gridMapCallback);
-    ros::Subscriber bump_sub = nh.subscribe("/bump", 1, bumpCallback);
     ros::Subscriber record_pub = nh.subscribe("/mode", 1, joyModeCallback);
 
     // initial flag
@@ -1295,7 +1279,7 @@ int main(int argc, char **argv)
             bool mapLost = (ros::Time::now().toSec() - updateMapTime.toSec() > 1.0)?true:false;
             bool poseLost = (ros::Time::now().toSec() - updatePoseTime.toSec() > 0.5)?true:false;
 
-            if( mapLost || poseLost || (!autoMode))//|| (!getBumpTopic)
+            if( mapLost || poseLost )//|| (!getBumpTopic)
             {
                 missionStop();
                 if(mapLost || poseLost) ROS_INFO(" %f seconds ago and up to now, has not received the map data. ",dt);
@@ -1323,7 +1307,7 @@ int main(int argc, char **argv)
         {
             if( updateMapFlag && updateRobotPose )
             {
-                if(findOriginPoint(originXY))
+                if(findOriginPoint())
                 {
                     initialMotion = true;
                 }

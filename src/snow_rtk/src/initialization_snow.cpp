@@ -233,33 +233,23 @@ bool straightMotion(geometry_msgs::Point nextPoint,geometry_msgs::Point lastPoin
     commandVelocity.y = controlPID(controlObject, conObjectInt, last_controlObject, 0.5, 0.01, 0);
     last_controlObject = controlObject;
 
-    if (fabs(commandVelocity.y) > 0.5)
-        commandVelocity.y = 0.5 * sign( commandVelocity.y );
+    if (fabs(commandVelocity.y) > 0.5) commandVelocity.y = 0.5 * sign( commandVelocity.y );
 
     // if boundry mode, limit velocity
     double deadLineDistance = targetVector.transpose() * pathVector;
     ROS_INFO("deadLine = %f, toLine = %f, target = %f.",deadLineDistance, trajectoryDistance, targetRobotPose); 
 
-    commandVelocity.x = 0.5*deadLineDistance;
+    commandVelocity.x = 0.5*deadLineDistance*cos(controlObject);
 
     // horizontal moving, limit velocity
     if( fabs(commandVelocity.x) > 0.3)
     {
          commandVelocity.x = 0.3 * sign(commandVelocity.x);
     }
-    else if( fabs(commandVelocity.x) < 0.15)
+    else if( fabs(commandVelocity.x) < 0.1)
     {
-         commandVelocity.x = 0.15*sign(commandVelocity.x);
+         commandVelocity.x = 0.1 * sign(commandVelocity.x);
     }
-    
-    commandVelocity.x = commandVelocity.x*cos(controlObject);
-
-    // need acceleration from scratch
-    // control_V_start = control_V_start + 0.35/10.0;
-    // if ( fabs(commandVelocity.x) > control_V_start)
-    // {
-    //     commandVelocity.x = control_V_start * sign(commandVelocity.x);
-    // }
 
     if(deadLineDistance > 0.1)
     {
@@ -291,7 +281,6 @@ bool zeroTurning(geometry_msgs::Point nextPoint,geometry_msgs::Point lastPoint)
     {
         commandVelocity.y = 0.5*sign(deltaTheta);
     }
-
 
     if(fabs(deltaTheta) > 20*PI/180)
     {
@@ -695,23 +684,11 @@ void gnssMessageCallback(const geometry_msgs::PoseStampedConstPtr& msg_position,
 
     POINT_XYZ pointECEF = BLHtoECEF(pointBLH);
 
-    // robotECEF(0) = msg_ecef->poses[0].position.x;
-    // robotECEF(1) = msg_ecef->poses[0].position.y;
-    // robotECEF(2) = msg_ecef->poses[0].position.z; 
-
     robotECEF(0) = pointECEF.x;
     robotECEF(1) = pointECEF.y;
     robotECEF(2) = pointECEF.z; 
 
-    // ROS_INFO("the robot XYZ : x = %f, y = %f, z = %f",robotECEF(0),robotECEF(1),robotECEF(2));
-    // ROS_INFO("the station XYZ : x = %f, y = %f, z = %f",stationECEF(0),stationECEF(1),stationECEF(2));
-    // ROS_INFO("the station BLH : B = %f, L = %f, H = %f",stationBLH(0),stationBLH(1),stationBLH(2));
-
     robotENU = getCoordinatesENU(robotECEF,stationECEF,stationBLH);
-
-    // robotVel.x = msg_ecef->poses[1].position.x;
-    // robotVel.y = msg_ecef->poses[1].position.y;
-    // robotVel.z = msg_ecef->poses[1].position.z; 
 
     gotPointRTK = (fabs(msg_position->pose.position.x - '4' ) < 0.01) ? true:false;
     updateRTK = true;
@@ -772,7 +749,7 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
-        if((!motionFinish) && refeshIMU && updateRTK && stationPoint && autoMode)
+        if((!motionFinish) && refeshIMU && updateRTK && stationPoint)
         {
             if(initialRobotPose())
             {
@@ -781,14 +758,6 @@ int main(int argc, char **argv)
             refeshIMU = false;
             updateRTK = false;
             gotPointRTK = false;
-        }
-        
-        if(!autoMode)
-        {
-            targetStates.linear.x = 0;     // velocity control
-            targetStates.angular.z = 0;    // angle control
-
-            vel_pub.publish(targetStates);
         }
 
         ros::spinOnce();

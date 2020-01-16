@@ -1,0 +1,15 @@
+<launch>
+
+  <!--uwbReader-->
+  <node pkg="uwb_zigzag" type="uwb_usb_reader" name="uwb_usb_reader" output="screen"/>
+
+  <!--imuReader-->
+  <node pkg="uwb_zigzag" type="imu_reader" name="imu_reader" output="screen"/> 
+
+  <!--magReader-->
+  <node pkg="read_sensor" type="read_mag" name="read_mag" output="screen"/> 
+
+  <!--uwbReader-->
+  <node pkg="uwb_zigzag" type="all_sensors_printf" name="all_sensors_printf" output="screen"/>  
+
+</launch>

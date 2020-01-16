@@ -273,7 +273,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle ni;
 	// ros::Publisher imu_pub = ni.advertise<geometry_msgs::PointStamped>("/alf001_dis", 1000);
 
-    mag_pub = ni.advertise<geometry_msgs::PoseStamped>("/mag_data", 1);
+    mag_pub = ni.advertise<geometry_msgs::PoseStamped>("/mag_data", 1); // 1 buffer data
 
     static ros::Time current_time;
 

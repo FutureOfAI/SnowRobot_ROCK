@@ -66,6 +66,10 @@ add_executable(RosTopic_test src/RosTopic_test.cpp)
 add_dependencies(RosTopic_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(RosTopic_test  ${catkin_LIBRARIES})
 
+add_executable(all_sensors_printf src/all_sensors_printf.cpp) 
+add_dependencies(all_sensors_printf ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(all_sensors_printf  ${catkin_LIBRARIES})
+
 add_executable(uwb_usb_reader src/uwb_usb_reader.cpp) 
 add_dependencies(uwb_usb_reader ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(uwb_usb_reader  ${catkin_LIBRARIES})

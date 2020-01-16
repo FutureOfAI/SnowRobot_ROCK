@@ -1,8 +1,0 @@
-prefix=/home/rock/catkin_ws/install
-
-Name: uwb_zigzag
-Description: Description of uwb_zigzag
-Version: 0.0.0
-Cflags: -I/home/rock/catkin_ws/install/include
-Libs: -L/home/rock/catkin_ws/install/lib 
-Requires: 

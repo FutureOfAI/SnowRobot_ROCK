@@ -196,7 +196,7 @@ YAT_POINTF getPathWayPoint(int num)
     vector<YAT_POINTF> pathWayPoint(pathNum);
 
     float moveDistance = 6;
-    float cutWidth = 0.3;
+    float cutWidth = 0.2;
 
     for(int i = 0; i < pathNum; i++)
     {
@@ -329,9 +329,9 @@ bool move_forward(YAT_POINTF targetPoint, YAT_POINTF lastPoint, YAT_POINTF &comm
     commandVelocity.x = 0.5 * deadLineDistance * cos(controlObject);
 
     // horizontal moving, limit velocity
-    if( fabs(commandVelocity.x) > 0.4)
+    if( fabs(commandVelocity.x) > 0.25)
     {
-         commandVelocity.x = 0.4 * sign(commandVelocity.x);
+         commandVelocity.x = 0.25 * sign(commandVelocity.x);
     }
     else if( fabs(commandVelocity.x) < 0.1)
     {

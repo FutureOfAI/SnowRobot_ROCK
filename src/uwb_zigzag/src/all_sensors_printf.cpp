@@ -141,6 +141,7 @@ int main(int argc, char **argv)
     // ros::Subscriber uwb_sub = nl.subscribe("/myuwb", 1000, uwbCallback); 
     ros::Subscriber uwb_sub = nl.subscribe("/uwb_raw", 1000, uwbCallback);
     ros::Subscriber mag_sub = nl.subscribe("/mag_data", 1000, magCallback);
+    
 
     ros::Rate loop_rate(10); //10hz loop rate
     signal(SIGINT, MySigintHandler); // replace ctrl-c to my own shutdown function

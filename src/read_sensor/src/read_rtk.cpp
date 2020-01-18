@@ -888,18 +888,18 @@ void gnssDataPublish()
 
 	positionMessage.header.stamp = ros::Time::now();
 	positionMessage.header.frame_id = "position";
-	positionMessage.pose.position.x = dataGGA.type;
-	positionMessage.pose.position.y = dataGGA.svNum;
-	positionMessage.pose.position.z = dataGGA.lostTime;
+	positionMessage.pose.position.x = dataGGA.type;     //定位类型
+	positionMessage.pose.position.y = dataGGA.svNum;    //卫星数量
+	positionMessage.pose.position.z = dataGGA.lostTime; //差分数据丢失时间
 
 	if(dataGGA.nshemi == 'N') positionMessage.pose.orientation.x = dataGGA.latitude;
-	else if(dataGGA.nshemi == 'S') positionMessage.pose.orientation.x = - dataGGA.latitude;
+	else if(dataGGA.nshemi == 'S') positionMessage.pose.orientation.x = - dataGGA.latitude;  //纬度
 
 	if(dataGGA.ewhemi == 'E') positionMessage.pose.orientation.y = dataGGA.longitude;
-	else if(dataGGA.ewhemi == 'W') positionMessage.pose.orientation.y = - dataGGA.longitude;
+	else if(dataGGA.ewhemi == 'W') positionMessage.pose.orientation.y = - dataGGA.longitude; //经度
 	
-	positionMessage.pose.orientation.z = dataGGA.altitude;
-	positionMessage.pose.orientation.w = dataGGA.undulation;
+	positionMessage.pose.orientation.z = dataGGA.altitude; //海拔
+	positionMessage.pose.orientation.w = dataGGA.undulation; //大地水准面差距
 	
 	geometry_msgs::PoseStamped stateMessage;
 

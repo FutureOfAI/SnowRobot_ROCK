@@ -501,6 +501,8 @@ bool testMotion()
     static YAT_POINTF lastPoint = getPathWayPoint(0);
     static YAT_POINTF nextPoint = getPathWayPoint(1);
 
+    ROS_INFO("error flag 12");
+
     YAT_POINTF commandVelocity;
 
     if( motionStep == 0)
@@ -540,6 +542,9 @@ bool testMotion()
 
     vel_pub.publish(targetStates);
 
+
+    ROS_INFO("motion step is %d",motionStep);
+
     return (motionStep == 3)?true:false;
 }
 
@@ -565,6 +570,8 @@ bool initialization()
     bool leftLowSpeed = (fabs(sensorData.odomVel.x)<0.0001)?true:false;
     bool rightLowSpeed = (fabs(sensorData.odomVel.y)<0.0001)?true:false;
 
+    ROS_INFO("error flag 1");
+
     if(leftLowSpeed && rightLowSpeed)
     {
         gyroData[pointNum].x = sensorData.gyro.x;
@@ -574,15 +581,21 @@ bool initialization()
         pointNum++;
     }
 
+    ROS_INFO("error flag 2");
+
     if(pointNum >= initialNum)
     {
         sensorData.baiseGyro = averagePoint(gyroData,pointNum);
         return true;
     }
 
+    ROS_INFO("error flag 3");
+
     targetStates.linear.x = 0;
     targetStates.angular.z = 0;
     vel_pub.publish(targetStates);
+
+    ROS_INFO("error flag 4");
 
     return false;
 }
@@ -736,43 +749,64 @@ int main(int argc, char **argv)
     ros::Rate loop_rate(10);
     ros::Time prev_whileloop = ros::Time::now();
 
+    ROS_INFO("error flag 5");
+
     bool initialMission = false;
 
     while(ros::ok())
     {
         if(updateOdom || updateIMU) locationDR();
         
+        ROS_INFO("error flag 6");
+
         if(!motionFinish)
         {
+
+            ROS_INFO("error flag 7");
+
             if(!initialMission)
             {
+
+                ROS_INFO("error flag 8");
+
                 if(gotPointRTK && sensorData.baseType)
                 {
+
+                    ROS_INFO("error flag 9");
+
                     startPose = robotPose;
                     if(initialization())  initialMission = true;
+                    ROS_INFO("error flag 10");
+
                 }
             }
             else
             {
-                if(updateIMU && updateOdom)
-                {
-                    if(testMotion())
-                    {
-                        motionFinish = true;
-                        ROS_INFO("mission is finish");
-                    }
+                dataRecord();
 
-                    if(!updateGNSS) ROS_INFO("initialization no GNSS data");
-                }
-                else
-                {
-                    if(!updateIMU) ROS_INFO("initialization no IMU data");
-                    if(!updateOdom) ROS_INFO("initialization no Odom data");
+
+                // if(updateIMU && updateOdom)
+                // {
+
+                //     ROS_INFO("error flag 11");
+
+                //     if(testMotion())
+                //     {
+                //         motionFinish = true;
+                //         ROS_INFO("mission is finish");
+                //     }
+
+                //     if(!updateGNSS) ROS_INFO("initialization no GNSS data");
+                // }
+                // else
+                // {
+                //     if(!updateIMU) ROS_INFO("initialization no IMU data");
+                //     if(!updateOdom) ROS_INFO("initialization no Odom data");
                     
-                    targetStates.linear.x = 0;
-                    targetStates.angular.z = 0;
-                    vel_pub.publish(targetStates);
-                }
+                //     targetStates.linear.x = 0;
+                //     targetStates.angular.z = 0;
+                //     vel_pub.publish(targetStates);
+                // }
             }
 
             updateOdom = false;
@@ -780,7 +814,7 @@ int main(int argc, char **argv)
             updateGNSS = false;
         }
 
-        dataRecord();
+
 
         ros::spinOnce();
         loop_rate.sleep();

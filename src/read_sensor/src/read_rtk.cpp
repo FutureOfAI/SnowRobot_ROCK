@@ -1029,7 +1029,7 @@ int main(int argc, char **argv)
 
 	gnss_pub = nh.advertise<geometry_msgs::PoseStamped>("/gnss_position", 10);
 	state_pub =  nh.advertise<geometry_msgs::PoseStamped>("/gnss_state", 10);
-	ecef_pub = nh.advertise<geometry_msgs::PoseArray>("/ecef_PosVel", 10);
+	ecef_pub = nh.advertise<geometry_msgs::PoseArray>("/ecef_PosVel", 10);        //普通gps输出信息
 	station_pub = nh.advertise<geometry_msgs::PointStamped>("/ecef_station", 10);
 	heading_pub = nh.advertise<geometry_msgs::PointStamped>("/rtk_yaw", 10);
 

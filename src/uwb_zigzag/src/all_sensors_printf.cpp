@@ -2,6 +2,7 @@
 #include <signal.h> // SIGINT
 #include "geometry_msgs/PoseArray.h"
 #include "geometry_msgs/PoseStamped.h"
+#include "geometry_msgs/PointStamped.h"
 #include <stdlib.h>
 #include <stdio.h>
 

@@ -135,7 +135,7 @@ void stateCallback(geometry_msgs::PoseStamped msg_state)
 }
 
 // rtk station ECEF-frame
-void stationCallback(geometry_msgs::PoseStamped msg_station)
+void stationCallback(geometry_msgs::PointStamped msg_station)
 {
     stationRTK[0] = msg_station.point.x;
     stationRTK[1] = msg_station.point.y;

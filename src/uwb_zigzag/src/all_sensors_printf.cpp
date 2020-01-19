@@ -22,11 +22,12 @@ typedef struct Data
     float rtkTrackTrue;
     float rtkSpeed;
     float rtkStation[3];
+    float rtkHead;
     float dt;
 }RawData;
 
 // global variable define
-float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, HeaderUWB[3], DistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3];
+float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, HeaderUWB[3], DistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3], headRTK;
 RawData DataBuffer[18000]; //save 30min data when 10hz sample rate
 uint16_t BufCnt = 0; // data buffer counter
 
@@ -44,7 +45,7 @@ void Save_Data(RawData *db, uint16_t cnt)
     // write data to text file
     for (int i = 0; i < cnt; ++i)
     {
-        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %f %f %f %f %f %f %f %f %f \n", \
+        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %f %f %f %f %f %f %f %f %f %f \n", \
             db[i].acc[0], db[i].acc[1], db[i].acc[2], \
             db[i].gro[0], db[i].gro[1], db[i].gro[2], \
             db[i].mag[0], db[i].mag[1], db[i].mag[2], db[i].YawM, \
@@ -56,6 +57,7 @@ void Save_Data(RawData *db, uint16_t cnt)
             db[i].rtkPos[0], db[i].rtkPos[1], db[i].rtkPos[2], \
             db[i].rtkTrackTrue, db[i].rtkSpeed, \
             db[i].rtkStation[0], db[i].rtkStation[1], db[i].rtkStation[2], \
+            db[i].rtkHead, \
             db[i].dt); 
     }
     fclose(fp); // close the file
@@ -143,6 +145,12 @@ void stationCallback(geometry_msgs::PointStamped msg_station)
     stationRTK[2] = msg_station.point.z;
 }
 
+// rtk heading
+void headingCallback(geometry_msgs::PointStamped msg_heading)
+{
+    headRTK = msg_heading.point.z;
+}
+
 void MySigintHandler(int sig)
 {
     // save data buffer to txt
@@ -175,6 +183,7 @@ int main(int argc, char **argv)
     ros::Subscriber gnss_sub = nl.subscribe("/gnss_position", 1000, gnssCallback);
     ros::Subscriber state_pub = nl.subscribe("/gnss_state", 1000, stateCallback);
     ros::Subscriber station_pub = nl.subscribe("/ecef_station", 1000, stationCallback);
+    ros::Subscriber heading_pub = nl.subscribe("/rtk_yaw", 1000, headingCallback);
 
     ros::Rate loop_rate(10); //10hz loop rate
     signal(SIGINT, MySigintHandler); // replace ctrl-c to my own shutdown function
@@ -233,6 +242,8 @@ int main(int argc, char **argv)
             DataBuffer[BufCnt].rtkStation[0] = stationRTK[0];
             DataBuffer[BufCnt].rtkStation[1] = stationRTK[1];
             DataBuffer[BufCnt].rtkStation[2] = stationRTK[2];
+            // rtk heading
+            DataBuffer[BufCnt].rtkHead = headRTK;
             // dt
             float dt=ros::Time::now().toSec()-prev_time.toSec();            
             DataBuffer[BufCnt].dt = dt;

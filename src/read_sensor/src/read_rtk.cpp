@@ -317,7 +317,7 @@ void NMEA_GNGGA_Analysis(GNGGA_msg *gnssData,u8 *buf)
 		gnssData->svNum = (int)(NMEAstr2Double(p1+posx));
 	} 
 
-	posx=NMEA_Comma_Pos(p1,8);								//获取
+	posx=NMEA_Comma_Pos(p1,8);								//获取水平精度因子
 	if(posx!=0XFF)
 	{		 				 
 		gnssData->hdop = NMEAstr2Double(p1+posx);
@@ -909,10 +909,10 @@ void gnssDataPublish()
 	stateMessage.pose.position.y = dataRMC.utc.min;
 	stateMessage.pose.position.z = dataRMC.utc.sec;
 	
-	stateMessage.pose.orientation.x = dataGGA.hdop;
-	stateMessage.pose.orientation.y = dataRMC.status;
-	stateMessage.pose.orientation.z = dataRMC.direction;
-	stateMessage.pose.orientation.w = dataRMC.speed;
+	stateMessage.pose.orientation.x = dataGGA.hdop;      //水平精度因子
+	stateMessage.pose.orientation.y = dataRMC.status;    //位置状态是否有效
+	stateMessage.pose.orientation.z = dataRMC.direction; //真北航迹方向
+	stateMessage.pose.orientation.w = dataRMC.speed;     //地速
 
 /********************************************************************************************/
     // POINT_XYZ pointBLH;

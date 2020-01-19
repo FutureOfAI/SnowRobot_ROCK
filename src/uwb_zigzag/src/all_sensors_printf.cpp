@@ -39,7 +39,7 @@ void Save_Data(RawData *db, uint16_t cnt)
 {
     // create raw data base text
     std::string data_path = "/home/rock/catkin_ws/src/uwb_zigzag/data/";
-    std::string current_file = data_path + getDate() + "_UWBandIMURawData.txt";
+    std::string current_file = data_path + getDate() + "_SensorsRawData.txt";
     // ROS_INFO_STREAM(current_file); // cout stream        
     FILE *fp;
     fp = fopen(current_file.c_str(), "w"); // create data.txt file
@@ -186,15 +186,15 @@ int main(int argc, char **argv)
 
     ros::NodeHandle nl;
 
-    ros::Subscriber pose_sub = nl.subscribe("/alf001_dis", 1000, poseCallback);
-    // ros::Subscriber uwb_sub = nl.subscribe("/myuwb", 1000, uwbCallback); 
-    ros::Subscriber uwb_sub = nl.subscribe("/uwb_raw", 1000, uwbCallback);
-    ros::Subscriber mag_sub = nl.subscribe("/mag_data", 1000, magCallback);
-    ros::Subscriber gnss_sub = nl.subscribe("/gnss_position", 1000, gnssCallback);
-    ros::Subscriber state_pub = nl.subscribe("/gnss_state", 1000, stateCallback);
-    ros::Subscriber station_pub = nl.subscribe("/ecef_station", 1000, stationCallback);
-    ros::Subscriber heading_pub = nl.subscribe("/rtk_yaw", 1000, headingCallback);
-    ros::Subscriber odom_pub = nl.subscribe("/Odom", 1000, odomCallback);
+    ros::Subscriber pose_sub = nl.subscribe("/imu_data", 100, poseCallback);
+    // ros::Subscriber uwb_sub = nl.subscribe("/myuwb", 100, uwbCallback); 
+    ros::Subscriber uwb_sub = nl.subscribe("/uwb_raw", 100, uwbCallback);
+    ros::Subscriber mag_sub = nl.subscribe("/mag_data", 100, magCallback);
+    ros::Subscriber gnss_sub = nl.subscribe("/gnss_position", 100, gnssCallback);
+    ros::Subscriber state_pub = nl.subscribe("/gnss_state", 100, stateCallback);
+    ros::Subscriber station_pub = nl.subscribe("/ecef_station", 100, stationCallback);
+    ros::Subscriber heading_pub = nl.subscribe("/rtk_yaw", 100, headingCallback);
+    ros::Subscriber odom_pub = nl.subscribe("/Odom", 100, odomCallback);
 
     ros::Rate loop_rate(10); //10hz loop rate
     signal(SIGINT, MySigintHandler); // replace ctrl-c to my own shutdown function

@@ -10,7 +10,7 @@
   <node pkg="uwb_zigzag" type="uwb_usb_reader" name="uwb_usb_reader" output="screen"/>
 
   <!--imuReader-->
-  <node pkg="uwb_zigzag" type="imu_reader" name="imu_reader" output="screen"/> 
+  <node pkg="read_sensor" type="read_imu" name="read_imu" output="screen"/> 
 
   <!--magReader-->
   <node pkg="read_sensor" type="read_mag" name="read_mag" output="screen"/> 

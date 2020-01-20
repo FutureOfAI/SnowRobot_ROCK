@@ -47,7 +47,7 @@ void Save_Data(RawData *db, uint16_t cnt)
     // write data to text file
     for (int i = 0; i < cnt; ++i)
     {
-        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f \n", \
+        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %f %f %f \n", \
             db[i].acc[0], db[i].acc[1], db[i].acc[2], \
             db[i].gro[0], db[i].gro[1], db[i].gro[2], \
             db[i].mag[0], db[i].mag[1], db[i].mag[2], db[i].YawM, \

@@ -15,6 +15,9 @@
   <!--magReader-->
   <node pkg="read_sensor" type="read_mag" name="read_mag" output="screen"/> 
 
+  <!--rtkReader-->
+  <node pkg="read_sensor" type="read_rtk" name="read_rtk" output="screen"/> 
+
   <!--uwbReader-->
   <node pkg="uwb_zigzag" type="all_sensors_printf" name="all_sensors_printf" output="screen"/>  
 

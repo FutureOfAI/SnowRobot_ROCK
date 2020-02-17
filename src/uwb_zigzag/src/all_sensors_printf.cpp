@@ -19,6 +19,7 @@ typedef struct Data
     float temprature;
     uint8_t headUWB[3];
     float distance[4];
+    uint8_t rtkType;
     float rtkPos[3];
     float rtkTrackTrue;
     float rtkSpeed;
@@ -29,7 +30,8 @@ typedef struct Data
 }RawData;
 
 // global variable define
-float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, HeaderUWB[3], DistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3], headRTK, shiftOdom[2];
+float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, DistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3], headRTK, shiftOdom[2];
+uint8_t HeaderUWB[3], TypeRTK;
 RawData DataBuffer[18000]; //save 30min data when 10hz sample rate
 uint16_t BufCnt = 0; // data buffer counter
 
@@ -47,7 +49,7 @@ void Save_Data(RawData *db, uint16_t cnt)
     // write data to text file
     for (int i = 0; i < cnt; ++i)
     {
-        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %f %f %f \n", \
+        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %f %f %f \n", \
             db[i].acc[0], db[i].acc[1], db[i].acc[2], \
             db[i].gro[0], db[i].gro[1], db[i].gro[2], \
             db[i].mag[0], db[i].mag[1], db[i].mag[2], db[i].YawM, \
@@ -56,7 +58,7 @@ void Save_Data(RawData *db, uint16_t cnt)
             db[i].temprature, \
             db[i].headUWB[0], db[i].headUWB[1], db[i].headUWB[2], \
             db[i].distance[0], db[i].distance[1], db[i].distance[2], db[i].distance[3], \
-            db[i].rtkPos[0], db[i].rtkPos[1], db[i].rtkPos[2], \
+            db[i].rtkType, db[i].rtkPos[0], db[i].rtkPos[1], db[i].rtkPos[2], \
             db[i].rtkTrackTrue, db[i].rtkSpeed, \
             db[i].rtkStation[0], db[i].rtkStation[1], db[i].rtkStation[2], \
             db[i].rtkHead, \
@@ -128,6 +130,7 @@ void magCallback(geometry_msgs::PoseStamped msg_mag)
 // rtk gnss subscribe request
 void gnssCallback(geometry_msgs::PoseStamped msg_gnss)
 {
+    TypeRTK = msg_gnss.poae.position.x;
     PosRTK[0] = msg_gnss.pose.orientation.x;
     PosRTK[1] = msg_gnss.pose.orientation.y;
     PosRTK[2] = msg_gnss.pose.orientation.z;
@@ -243,6 +246,7 @@ int main(int argc, char **argv)
             DataBuffer[BufCnt].distance[2] = DistUWB[2];
             DataBuffer[BufCnt].distance[3] = DistUWB[3];
             // rtk position in earth frame
+            DataBuffer[BufCnt].rtkType = TypeRTK;
             DataBuffer[BufCnt].rtkPos[0] = PosRTK[0];
             DataBuffer[BufCnt].rtkPos[1] = PosRTK[1];
             DataBuffer[BufCnt].rtkPos[2] = PosRTK[2];

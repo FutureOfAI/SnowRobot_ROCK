@@ -228,11 +228,11 @@ void dataAnalyse(Mag_TypeDef * magData)
 	p=buf;
 	if(*buf==FULL)
 	{			
-		magData->Magx = signData(p[2],p[1]);
-		magData->Magy = signData(p[4],p[3]);
-		magData->Magz = signData(p[6],p[5]);
+		magData->Magx = signData(p[3],p[2]);
+		magData->Magy = signData(p[5],p[4]);
+		magData->Magz = signData(p[7],p[6]);
 
-		magData->MagYaw = signData(p[8],p[7]) / 10.0;
+		magData->MagYaw = signData(p[9],p[8]) / 10.0;
 
 		magData->dt = ros::Time::now().toSec() - startTime.toSec();
 		startTime = ros::Time::now();

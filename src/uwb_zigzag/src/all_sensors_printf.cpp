@@ -17,8 +17,10 @@ typedef struct Data
     float euler[3];
     float quat[4];
     float temprature;
-    uint8_t headUWB[3];
-    float distance[4];
+    uint8_t rawMaskUWB;
+    float rawDistance[4];
+    uint8_t baseMaskUWB;
+    float baseDistance[4];
     uint8_t rtkType;
     float rtkPos[3];
     float rtkTrackTrue;
@@ -30,8 +32,8 @@ typedef struct Data
 }RawData;
 
 // global variable define
-float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, DistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3], headRTK, shiftOdom[2];
-uint8_t HeaderUWB[3], TypeRTK;
+float RawAcc[3], RawGro[3], RawMag[3], MagYaw, Euler[3], Quat[4], Tempra, RawDistUWB[4], BaseDistUWB[4], PosRTK[3], TrackTrue, SpeedRTK, stationRTK[3], headRTK, shiftOdom[2];
+uint8_t MaskUWBRaw, MaskUWBBase, TypeRTK;
 RawData DataBuffer[18000]; //save 30min data when 10hz sample rate
 uint16_t BufCnt = 0; // data buffer counter
 
@@ -49,15 +51,15 @@ void Save_Data(RawData *db, uint16_t cnt)
     // write data to text file
     for (int i = 0; i < cnt; ++i)
     {
-        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %d %d %f %f %f %f %f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %f %f %f \n", \
+        fprintf (fp, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %f %f %f %f %d %f %f %f %f %d %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %0.8f %f %f %f \n", \
             db[i].acc[0], db[i].acc[1], db[i].acc[2], \
             db[i].gro[0], db[i].gro[1], db[i].gro[2], \
             db[i].mag[0], db[i].mag[1], db[i].mag[2], db[i].YawM, \
             db[i].euler[0], db[i].euler[1], db[i].euler[2], \
             db[i].quat[0], db[i].quat[1], db[i].quat[2], db[i].quat[3], \
             db[i].temprature, \
-            db[i].headUWB[0], db[i].headUWB[1], db[i].headUWB[2], \
-            db[i].distance[0], db[i].distance[1], db[i].distance[2], db[i].distance[3], \
+            db[i].rawMaskUWB, db[i].rawDistance[0], db[i].rawDistance[1], db[i].rawDistance[2], db[i].rawDistance[3], \
+            db[i].baseMaskUWB, db[i].baseDistance[0], db[i].baseDistance[1], db[i].baseDistance[2], db[i].baseDistance[3], \
             db[i].rtkType, db[i].rtkPos[0], db[i].rtkPos[1], db[i].rtkPos[2], \
             db[i].rtkTrackTrue, db[i].rtkSpeed, \
             db[i].rtkStation[0], db[i].rtkStation[1], db[i].rtkStation[2], \
@@ -101,20 +103,27 @@ void poseCallback(geometry_msgs::PoseArray msg_alf)
     // odomData.pose.orientation.w = msg_alf.poses[1].orientation.w;
 }
 
-// uwb data subscribe request
-void uwbCallback(geometry_msgs::PoseStamped msg_uwb)
+// uwb tag to all station data subscribe request
+void uwbRawCallback(geometry_msgs::PoseStamped msg_uwb)
 {
-    HeaderUWB[0] = msg_uwb.pose.position.x;
-    HeaderUWB[1] = msg_uwb.pose.position.y;
-    HeaderUWB[2] = msg_uwb.pose.position.z;
-
-    DistUWB[0] = msg_uwb.pose.orientation.x; // anchor[0]
-    DistUWB[1] = msg_uwb.pose.orientation.y; // anchor[1]
-    DistUWB[2] = msg_uwb.pose.orientation.z; // anchor[2]
-    DistUWB[3] = msg_uwb.pose.orientation.w; // anchor[3]
+    MaskUWBRaw = msg_uwb.pose.position.z;
+    RawDistUWB[0] = msg_uwb.pose.orientation.x; // anchor[0]
+    RawDistUWB[1] = msg_uwb.pose.orientation.y; // anchor[1]
+    RawDistUWB[2] = msg_uwb.pose.orientation.z; // anchor[2]
+    RawDistUWB[3] = msg_uwb.pose.orientation.w; // anchor[3]
 
     // ROS_INFO("%f %f %f\n", HeaderUWB[0], HeaderUWB[1], HeaderUWB[2]);
     // ROS_INFO("%f %f %f %f\n", DistUWB[0], DistUWB[1], DistUWB[2], DistUWB[3]);
+}
+
+// uwb all station each other suabscibe request
+void uwbBaseCallback(geometry_msgs::PoseStamped msg_uwb)
+{
+    MaskUWBBase = msg_uwb.pose.position.z;
+    BaseDistUWB[0] = msg_uwb.pose.orientation.x; // 0
+    BaseDistUWB[1] = msg_uwb.pose.orientation.y; // base 0-1
+    BaseDistUWB[2] = msg_uwb.pose.orientation.z; // base 0-2
+    BaseDistUWB[3] = msg_uwb.pose.orientation.w; // base 1-2
 }
 
 // magnetic sensor subscribe request
@@ -190,8 +199,8 @@ int main(int argc, char **argv)
     ros::NodeHandle nl;
 
     ros::Subscriber pose_sub = nl.subscribe("/imu_data", 100, poseCallback);
-    // ros::Subscriber uwb_sub = nl.subscribe("/myuwb", 100, uwbCallback); 
-    ros::Subscriber uwb_sub = nl.subscribe("/uwb_raw", 100, uwbCallback);
+    ros::Subscriber uwb_raw_sub = nl.subscribe("/uwb_raw", 100, uwbRawCallback);
+    ros::Subscriber uwb_base_sub = nl.subscribe("/uwb_base", 100, uwbBaseCallback);
     ros::Subscriber mag_sub = nl.subscribe("/mag_data", 100, magCallback);
     ros::Subscriber gnss_sub = nl.subscribe("/gnss_position", 100, gnssCallback);
     ros::Subscriber state_pub = nl.subscribe("/gnss_state", 100, stateCallback);
@@ -236,15 +245,20 @@ int main(int argc, char **argv)
             DataBuffer[BufCnt].quat[3] = Quat[3];
             // temprature
             DataBuffer[BufCnt].temprature = Tempra;
-            // uwb header
-            DataBuffer[BufCnt].headUWB[0] = HeaderUWB[0];
-            DataBuffer[BufCnt].headUWB[1] = HeaderUWB[1];
-            DataBuffer[BufCnt].headUWB[2] = HeaderUWB[2];
-            // uwb distance
-            DataBuffer[BufCnt].distance[0] = DistUWB[0];
-            DataBuffer[BufCnt].distance[1] = DistUWB[1];
-            DataBuffer[BufCnt].distance[2] = DistUWB[2];
-            DataBuffer[BufCnt].distance[3] = DistUWB[3];
+            // uwb tag to anchor mask
+            DataBuffer[BufCnt].rawMaskUWB = MaskUWBRaw;
+            // uwb tag to anchor distance
+            DataBuffer[BufCnt].rawDistance[0] = RawDistUWB[0];
+            DataBuffer[BufCnt].rawDistance[1] = RawDistUWB[1];
+            DataBuffer[BufCnt].rawDistance[2] = RawDistUWB[2];
+            DataBuffer[BufCnt].rawDistance[3] = RawDistUWB[3];
+            // uwb anchor each other mask
+            DataBuffer[BufCnt].baseMaskUWB = MaskUWBBase;
+            // uwb anchor each other distance
+            DataBuffer[BufCnt].baseDistance[0] = BaseDistUWB[0];
+            DataBuffer[BufCnt].baseDistance[1] = BaseDistUWB[1];
+            DataBuffer[BufCnt].baseDistance[2] = BaseDistUWB[2];
+            DataBuffer[BufCnt].baseDistance[3] = BaseDistUWB[3];
             // rtk position in earth frame
             DataBuffer[BufCnt].rtkType = TypeRTK;
             DataBuffer[BufCnt].rtkPos[0] = PosRTK[0];

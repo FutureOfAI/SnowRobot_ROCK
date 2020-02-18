@@ -232,7 +232,7 @@ void dataAnalyse(Mag_TypeDef * magData)
 		magData->Magy = signData(p[5],p[4]);
 		magData->Magz = signData(p[7],p[6]);
 
-		magData->MagYaw = signData(p[9],p[8]);
+		magData->MagYaw = signData(p[9],p[8]) / 10.0;
 
 		magData->dt = ros::Time::now().toSec() - startTime.toSec();
 		startTime = ros::Time::now();

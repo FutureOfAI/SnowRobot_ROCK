@@ -139,7 +139,7 @@ void magCallback(geometry_msgs::PoseStamped msg_mag)
 // rtk gnss subscribe request
 void gnssCallback(geometry_msgs::PoseStamped msg_gnss)
 {
-    TypeRTK = msg_gnss.poae.position.x;
+    TypeRTK = msg_gnss.pose.position.x;
     PosRTK[0] = msg_gnss.pose.orientation.x;
     PosRTK[1] = msg_gnss.pose.orientation.y;
     PosRTK[2] = msg_gnss.pose.orientation.z;

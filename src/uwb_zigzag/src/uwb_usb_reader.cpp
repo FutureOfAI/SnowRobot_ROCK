@@ -310,8 +310,8 @@ int main(int argc, char *argv[])
 	uwb_raw_pub = nh.advertise<geometry_msgs::PoseStamped>("/uwb_raw", 10);
 	uwb_base_pub = nh.advertise<geometry_msgs::PoseStamped>("/uwb_base", 10);
 
-	// std::string port("/dev/uwb");
-	std::string port("/dev/ttyACM0");
+	std::string port("/dev/uwb");
+	// std::string port("/dev/ttyACM0");
 	// std::string port("/dev/ttyUSB0");
 
 	// Argument 2 is the baudrate
